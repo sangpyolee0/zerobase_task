@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.example.wifi.DatabaseService" %>
+<%@ page import="java.util.List" %>
+
+<%
+    String lat = request.getParameter("lat");
+    String lnt = request.getParameter("lnt");
+
+    DatabaseService dbService = new DatabaseService();
+    List<String[]> wifiList = dbService.getNearbyWifi(lat, lnt, 0, 20); // 페이지네이션: 처음 20개만 가져옴
+
+    response.setContentType("application/json");
+    response.setCharacterEncoding("UTF-8");
+
+    out.print("[");
+    for (int i = 0; i < wifiList.size(); i++) {
+        String[] wifi = wifiList.get(i);
+        out.print("{");
+        out.print("\"distance\": \"" + wifi[2] + "\",");
+        out.print("\"name\": \"" + wifi[0] + "\",");
+        out.print("\"address\": \"" + wifi[1] + "\",");
+        out.print("\"details\": \"" + wifi[3] + "\",");
+        out.print("\"lat\": \"" + wifi[4] + "\",");
+        out.print("\"lnt\": \"" + wifi[5] + "\"");
+        out.print("}");
+        if (i < wifiList.size() - 1) out.print(",");
+    }
+    out.print("]");
+%>

@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.example.wifi.DatabaseService" %>
+<%@ page import="com.google.gson.JsonArray" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>근처 와이파이 정보</title>
+</head>
+<body>
+    <h1>근처 와이파이 정보</h1>
+    <%
+        String lat = request.getParameter("lat");
+        String lnt = request.getParameter("lnt");
+
+        if (lat != null && lnt != null) {
+            DatabaseService dbService = new DatabaseService();
+            JsonArray wifiList = dbService.getNearbyWifi(lat, lnt); // DB에서 데이터 가져오기
+
+            out.println("<table>");
+            out.println("<tr><th>와이파이 이름</th><th>주소</th><th>거리</th></tr>");
+            for (int i = 0; i < wifiList.size(); i++) {
+                JsonObject wifi = wifiList.get(i).getAsJsonObject();
+                out.println("<tr>");
+                out.println("<td>" + wifi.get("wifiName").getAsString() + "</td>");
+                out.println("<td>" + wifi.get("address").getAsString() + "</td>");
+                out.println("<td>" + wifi.get("distance").getAsString() + "m</td>");
+                out.println("</tr>");
+            }
+            out.println("</table>");
+        } else {
+            out.println("<p>LAT와 LNT 값을 입력하세요.</p>");
+        }
+    %>
+</body>
+</html>

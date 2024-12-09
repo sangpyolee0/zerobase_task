@@ -1,0 +1,39 @@
+/* add-wifi.css: add-wifi.jsp 전용 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: flex-start; /* 세로 위쪽 정렬 */
+    height: 100vh;
+    margin: 0;
+    background-color: #f9f9f9;
+    padding-top: 50px; /* 화면 위쪽에서 약간의 여백 추가 */
+}
+
+.container {
+    text-align: center;
+    background: #ffffff;
+    padding: 30px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #333;
+}
+
+nav a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #007BFF;
+    font-size: 16px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}

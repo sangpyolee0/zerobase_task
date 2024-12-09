@@ -1,0 +1,26 @@
+<%@page import="db.Member"%>
+<%@page import="java.util.List"%>
+<%@page import="db.MemberService"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<%
+		System.out.println("Hello1");	
+	
+		out.write("Hello3");
+		
+		MemberService memberService = new MemberService();
+        List<Member> memberList = memberService.list();
+        
+        out.write(memberList.toString());
+		
+	
+	%>
+</body>
+</html>

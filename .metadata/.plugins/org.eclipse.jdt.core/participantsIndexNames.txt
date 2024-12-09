@@ -1,0 +1,7 @@
+INDEX VERSION 1.134
+C:\DEV\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2588866195.index
+\jsp-study\src\main\java
+C:\DEV\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\678220273.index
+\jsp-study\src\main\java
+C:\DEV\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1973972611.index
+\WifiProject\src\main\java

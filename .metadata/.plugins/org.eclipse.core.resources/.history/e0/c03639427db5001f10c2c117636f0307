@@ -1,0 +1,32 @@
+package com.example.wifi;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class WifiApiService {
+    private static final String API_KEY = "494f4e5359746b64363343416b4352";
+
+    public JsonObject fetchWifiData(int start, int end) throws Exception {
+        // Open API URL 생성
+        String apiUrl = "http://openapi.seoul.go.kr:8088/" + API_KEY + "/json/TbPublicWifiInfo/" + start + "/" + end + "/";
+
+        // HTTP 연결 설정
+        URL url = new URL(apiUrl);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setConnectTimeout(5000); // 5초 연결 대기
+        connection.setReadTimeout(5000);   // 5초 읽기 대기
+
+        // API 응답 읽기
+        try (InputStreamReader reader = new InputStreamReader(connection.getInputStream())) {
+            JsonObject response = JsonParser.parseReader(reader).getAsJsonObject();
+            return response.getAsJsonObject("TbPublicWifiInfo");
+        } catch (Exception e) {
+            throw new Exception("API 호출 중 오류 발생: " + e.getMessage());
+        }
+    }
+}

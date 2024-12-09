@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="com.tomato.exerd.core.wizard.NewEXerdWizard">
+		<section name="NewEXerdWizard.dialogBounds">
+			<item key="DIALOG_X_ORIGIN" value="1101"/>
+			<item key="DIALOG_Y_ORIGIN" value="435"/>
+			<item key="DIALOG_WIDTH" value="971"/>
+			<item key="DIALOG_HEIGHT" value="818"/>
+			<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+		</section>
+	</section>
+	<section name="com.tomato.exerd.propertyPages.PropertyDialog">
+		<item key="DIALOG_X_ORIGIN" value="1060"/>
+		<item key="DIALOG_Y_ORIGIN" value="266"/>
+		<item key="DIALOG_WIDTH" value="1115"/>
+		<item key="DIALOG_HEIGHT" value="1057"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+</section>

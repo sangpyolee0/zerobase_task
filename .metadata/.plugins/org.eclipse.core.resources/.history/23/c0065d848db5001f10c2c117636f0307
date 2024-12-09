@@ -1,0 +1,99 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>와이파이 정보 구하기</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script>
+        let currentPage = 1; // 현재 페이지 번호
+
+        // AJAX 요청 함수
+        function fetchWifiData(lat, lnt, page) {
+            fetch(`nearby-wifi.jsp?lat=${lat}&lnt=${lnt}&page=${page}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        renderTable(data);
+                    } else {
+                        alert("더 이상 데이터가 없습니다.");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        }
+
+        // 테이블 렌더링 함수
+        function renderTable(data) {
+            const tableBody = document.getElementById("wifi-table-body");
+            if (currentPage === 1) tableBody.innerHTML = ""; // 첫 페이지면 기존 데이터 삭제
+
+            data.forEach(row => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${row.name}</td>
+                    <td>${row.address}</td>
+                    <td>${row.distance}</td>
+                    <td>${row.lat}</td>
+                    <td>${row.lnt}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // 근처 WIFI 정보 보기 버튼 클릭 이벤트
+        function showWifiData() {
+            const lat = document.getElementById("lat").value;
+            const lnt = document.getElementById("lnt").value;
+
+            if (!lat || !lnt) {
+                alert("위도와 경도를 입력해주세요!");
+                return;
+            }
+
+            currentPage = 1; // 페이지 초기화
+            fetchWifiData(lat, lnt, currentPage);
+        }
+
+        // 다음 페이지 버튼 클릭 이벤트
+        function loadNextPage() {
+            const lat = document.getElementById("lat").value;
+            const lnt = document.getElementById("lnt").value;
+
+            currentPage++;
+            fetchWifiData(lat, lnt, currentPage);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>와이파이 정보 구하기</h1>
+        <nav>
+            <a href="history.jsp">위치 히스토리 목록</a> |
+            <a href="add-wifi.jsp">Open API 와이파이 정보 가져오기</a>
+        </nav>
+        <form onsubmit="event.preventDefault(); showWifiData();">
+            <label for="lat">LAT:</label>
+            <input type="text" id="lat" name="lat" placeholder="위도 입력">
+            <label for="lnt">LNT:</label>
+            <input type="text" id="lnt" name="lnt" placeholder="경도 입력">
+            <button type="button" onclick="showWifiData()">근처 WIFI 정보 보기</button>
+        </form>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>이름</th>
+                        <th>주소</th>
+                        <th>거리 (m)</th>
+                        <th>위도</th>
+                        <th>경도</th>
+                    </tr>
+                </thead>
+                <tbody id="wifi-table-body">
+                    <!-- 동적으로 추가될 데이터 -->
+                </tbody>
+            </table>
+            <button type="button" onclick="loadNextPage()">다음 페이지</button>
+        </div>
+    </div>
+</body>
+</html>

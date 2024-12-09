@@ -1,0 +1,101 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>와이파이 정보 구하기</title>
+</head>
+<body>
+    <div class="container">
+        <h1>와이파이 정보 구하기</h1>
+        <nav>
+            <a href="index.jsp">홈</a>
+            <span>|</span>
+            <a href="history.jsp">위치 히스토리 목록</a>
+            <span>|</span>
+            <a href="add-wifi.jsp">Open API 와이파이 정보 가져오기</a>
+        </nav>
+        <form id="wifiForm">
+            <label for="lat">LAT:</label>
+            <input type="text" id="lat" name="lat" placeholder="위도 입력">
+            <label for="lnt">LNT:</label>
+            <input type="text" id="lnt" name="lnt" placeholder="경도 입력">
+            <button type="button" onclick="fetchLocation()">내 위치 가져오기</button>
+            <button type="button" onclick="fetchWifiData()">근처 WIFI 정보 보기</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>거리(Km)</th>
+                    <th>관리번호</th>
+                    <th>자치구</th>
+                    <th>와이파이명</th>
+                    <th>도로명주소</th>
+                    <th>상세주소</th>
+                    <th>설치위치(층)</th>
+                    <th>설치유형</th>
+                    <th>설치기관</th>
+                    <th>서비스구분</th>
+                    <th>망종류</th>
+                    <th>설치년도</th>
+                    <th>실내외구분</th>
+                    <th>WIFI접속환경</th>
+                    <th>X좌표</th>
+                    <th>Y좌표</th>
+                    <th>작업일자</th>
+                </tr>
+            </thead>
+            <tbody id="wifiTable">
+                <!-- 데이터가 렌더링됩니다. -->
+            </tbody>
+        </table>
+        <p class="message">위치 정보를 입력한 후에 조회해 주세요.</p>
+    </div>
+</body>
+<script>
+    function fetchLocation() {
+        // 브라우저의 Geolocation API 사용
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                document.getElementById('lat').value = position.coords.latitude.toFixed(6);
+                document.getElementById('lnt').value = position.coords.longitude.toFixed(6);
+                alert('위치가 성공적으로 설정되었습니다!');
+            }, function(error) {
+                alert('위치를 가져오는 중 오류가 발생했습니다.');
+            });
+        } else {
+            alert('이 브라우저는 위치 서비스를 지원하지 않습니다.');
+        }
+    }
+
+    function fetchWifiData() {
+        // 사용자가 입력한 LAT, LNT 값
+        const lat = document.getElementById('lat').value;
+        const lnt = document.getElementById('lnt').value;
+
+        // AJAX 요청을 통해 데이터 가져오기
+        fetch(`nearby-wifi.jsp?lat=${lat}&lnt=${lnt}`)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('wifiTable');
+                tableBody.innerHTML = ''; // 기존 데이터 초기화
+                data.forEach(wifi => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${wifi.distance}</td>
+                        <td>${wifi.name}</td>
+                        <td>${wifi.address}</td>
+                        <td>${wifi.details}</td>
+                        <td>${wifi.lat}</td>
+                        <td>${wifi.lnt}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching WiFi data:', error);
+                alert('WiFi 데이터를 가져오는 중 오류가 발생했습니다.');
+            });
+    }
+</script>
+</html>

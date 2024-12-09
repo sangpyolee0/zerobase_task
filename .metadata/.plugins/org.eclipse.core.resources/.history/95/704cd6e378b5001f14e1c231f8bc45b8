@@ -1,0 +1,18 @@
+<%@ page import="com.example.wifi.WifiApiService" %>
+<%@ page import="com.example.wifi.DatabaseService" %>
+<%@ page import="com.google.gson.JsonObject" %>
+<%@ page import="com.google.gson.JsonArray" %>
+<%
+    WifiApiService apiService = new WifiApiService();
+    DatabaseService dbService = new DatabaseService();
+
+    try {
+        JsonObject wifiData = apiService.fetchWifiData(1, 100); // API 호출 범위 설정
+        JsonArray wifiList = wifiData.getAsJsonObject("TbPublicWifiInfo").getAsJsonArray("row");
+        dbService.saveWifiData(wifiList); // 데이터를 DB에 저장
+        out.println("<h3>와이파이 데이터가 성공적으로 저장되었습니다!</h3>");
+    } catch (Exception e) {
+        out.println("<h3>오류 발생: " + e.getMessage() + "</h3>");
+    }
+%>
+<a href="index.jsp">홈으로 가기</a>

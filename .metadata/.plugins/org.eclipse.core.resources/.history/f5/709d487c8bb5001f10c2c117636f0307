@@ -1,0 +1,38 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.example.wifi.DatabaseService" %>
+<%@ page import="java.util.List" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>근처 와이파이</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <h1>근처 와이파이 정보</h1>
+    <nav>
+        <a href="index.jsp">홈으로 가기</a>
+    </nav>
+    <%
+        String lat = request.getParameter("lat");
+        String lnt = request.getParameter("lnt");
+
+        if (lat != null && lnt != null) {
+            DatabaseService dbService = new DatabaseService();
+            List<String[]> wifiList = dbService.getNearbyWifi(lat, lnt);
+
+            out.println("<table>");
+            out.println("<tr><th>와이파이 이름</th><th>주소</th><th>거리</th></tr>");
+            for (String[] wifi : wifiList) {
+                out.println("<tr>");
+                out.println("<td>" + wifi[0] + "</td>");
+                out.println("<td>" + wifi[1] + "</td>");
+                out.println("<td>" + wifi[2] + "</td>");
+                out.println("</tr>");
+            }
+            out.println("</table>");
+        } else {
+            out.println("<p>LAT와 LNT 값을 입력하세요.</p>");
+        }
+    %>
+</body>
+</html>

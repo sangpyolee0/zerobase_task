@@ -1,0 +1,25 @@
+package com.example.wifi;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+public class WifiApiService {
+    private static final String API_KEY = "YOUR_API_KEY"; // 발급받은 서울시 API 키
+    private static final String BASE_URL = "https://openapi.seoul.go.kr:8088/" + API_KEY + "/json/TbPublicWifiInfo/";
+
+    public JsonObject fetchWifiData(int startIndex, int endIndex) throws Exception {
+        OkHttpClient client = new OkHttpClient();
+        String url = BASE_URL + startIndex + "/" + endIndex;
+
+        Request request = new Request.Builder().url(url).build();
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new Exception("API 호출 실패: " + response.code());
+            }
+            return JsonParser.parseString(response.body().string()).getAsJsonObject();
+        }
+    }
+}

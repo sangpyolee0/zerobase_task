@@ -1,0 +1,32 @@
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DatabaseService {
+    public List<String[]> getHistoryList() {
+        List<String[]> historyList = new ArrayList<>();
+        String url = "jdbc:mariadb://localhost:3306/your_database_name";
+        String user = "your_username";
+        String password = "your_password";
+
+        String query = "SELECT id, lat, lnt, date FROM location_history ORDER BY date DESC";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                String[] history = new String[4];
+                history[0] = rs.getString("id");      // ID
+                history[1] = rs.getString("lat");     // LAT
+                history[2] = rs.getString("lnt");     // LNT
+                history[3] = rs.getString("date");    // 조회 날짜
+                historyList.add(history);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return historyList;
+    }
+}

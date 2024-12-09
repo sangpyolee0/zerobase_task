@@ -1,0 +1,15 @@
+body {
+    font-family: Arial, sans-serif;
+}
+table, th, td {
+    border: 1px solid #009879;
+    border-collapse: collapse;
+    padding: 10px;
+}
+th {
+    background-color: #009879;
+    color: white;
+}
+td {
+    background-color: #f3f3f3;
+}

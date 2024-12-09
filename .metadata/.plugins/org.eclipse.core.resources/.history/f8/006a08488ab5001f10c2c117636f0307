@@ -1,0 +1,92 @@
+/* history.css: 위치 히스토리 목록 페이지 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+nav {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+nav a, nav span {
+    text-decoration: none;
+    color: #007BFF; /* 하이퍼링크 색상 */
+    font-size: 14px;
+}
+
+nav span {
+    color: #999; /* 구분자(|) 색상 */
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+button.delete {
+    background-color: #ff4d4d; /* 빨간색 버튼 */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button.delete:hover {
+    background-color: #cc0000; /* 버튼 호버 시 더 어두운 빨간색 */
+}
+
+/* 화면 꽉 차도록 설정 */
+.container {
+    height: calc(100vh - 40px); /* 화면 전체 높이에서 상하 여백 제외 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+table {
+    flex: 1; /* 테이블이 남은 공간을 채우도록 설정 */
+    overflow-y: auto; /* 테이블 스크롤 허용 */
+}

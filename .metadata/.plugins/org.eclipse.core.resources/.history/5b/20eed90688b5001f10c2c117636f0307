@@ -1,0 +1,45 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.wifi.DatabaseService" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>위치 히스토리</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <h1>위치 히스토리</h1>
+    <nav>
+        <a href="index.jsp">홈으로 가기</a>
+    </nav>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>LAT</th>
+                <th>LNT</th>
+                <th>날짜</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%
+                DatabaseService dbService = new DatabaseService();
+                List<String[]> history = dbService.getHistoryList();
+
+                if (history != null && !history.isEmpty()) {
+                    for (String[] row : history) {
+                        out.println("<tr>");
+                        out.println("<td>" + row[0] + "</td>");
+                        out.println("<td>" + row[1] + "</td>");
+                        out.println("<td>" + row[2] + "</td>");
+                        out.println("<td>" + row[3] + "</td>");
+                        out.println("</tr>");
+                    }
+                } else {
+                    out.println("<tr><td colspan='4'>기록이 없습니다.</td></tr>");
+                }
+            %>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,29 @@
+public List<String[]> getNearbyWifi(String lat, String lnt) {
+    List<String[]> resultList = new ArrayList<>();
+    String query = "SELECT wifiName, address, " +
+                   "ST_Distance_Sphere(Point(lnt, lat), Point(?, ?)) AS distance, lat, lnt " +
+                   "FROM wifi_data " +
+                   "ORDER BY distance LIMIT 20";
+
+    try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+         PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+        pstmt.setString(1, lnt);
+        pstmt.setString(2, lat);
+
+        try (ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                String[] wifiInfo = new String[5];
+                wifiInfo[0] = rs.getString("distance");
+                wifiInfo[1] = rs.getString("wifiName");
+                wifiInfo[2] = rs.getString("address");
+                wifiInfo[3] = rs.getString("lat");
+                wifiInfo[4] = rs.getString("lnt");
+                resultList.add(wifiInfo);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return resultList;
+}

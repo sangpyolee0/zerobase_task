@@ -1,0 +1,47 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.wifi.DatabaseService" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>위치 히스토리 목록</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <h1>위치 히스토리 목록</h1>
+    <nav>
+        <a href="index.jsp">홈으로 가기</a> |
+        <a href="add-wifi.jsp">Open API 와이파이 정보 가져오기</a>
+    </nav>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>LAT</th>
+                <th>LNT</th>
+                <th>조회 날짜</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%
+                DatabaseService dbService = new DatabaseService();
+                List<String[]> historyList = dbService.getHistoryList(); // DB에서 히스토리 가져오기
+
+                if (historyList != null && !historyList.isEmpty()) {
+                    for (String[] history : historyList) {
+                        out.println("<tr>");
+                        out.println("<td>" + history[0] + "</td>"); // ID
+                        out.println("<td>" + history[1] + "</td>"); // LAT
+                        out.println("<td>" + history[2] + "</td>"); // LNT
+                        out.println("<td>" + history[3] + "</td>"); // 조회 날짜
+                        out.println("</tr>");
+                    }
+                } else {
+                    out.println("<tr><td colspan='4'>기록이 없습니다.</td></tr>");
+                }
+            %>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,45 @@
+
+package db;
+
+import java.util.Scanner;
+
+public class DbTestMain {
+
+	public static void main(String[] args) {
+
+        MemberService memberService = new MemberService();
+//        memberService.dbSelect(); 
+	}
+	
+    public static void _main(String[] args) {
+
+        MemberService memberService = new MemberService();
+//        dbTest.dbSelect();
+//        dbTest.register();
+//        dbTest.dbUpdate();
+//        dbTest.withdraw();
+
+
+        Scanner scanner = new Scanner(System.in);
+
+        String memberType = "email";
+        System.out.println("탈퇴한 회원 아이디를 입력해주세요");
+        System.out.println("아이디 입력 >>>>");
+        String userId = scanner.next();
+//        System.out.println("이름 입력 >>>>");
+//        String name = scanner.next();
+//        System.out.println("비밀번호 입력 >>>>");
+//        String password = scanner.next();
+
+        Member member = new Member();
+        member.setMemberType(memberType);
+        member.setUserId(userId);
+//        member.setName(name);
+//        member.setPassword(password);
+
+
+//        memberService.register(member);
+        memberService.withdraw(member);
+
+    }
+}

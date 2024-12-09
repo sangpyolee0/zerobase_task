@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+  <connection>
+    <productId>com.tomato.db.mysql</productId>
+    <productName>MySQL 5.1 ~ 8.0</productName>
+    <name>1</name>
+    <driverJars>
+      <driverJar>C:\Users\Danilo\Desktop\java study\lib\mariadb-java-client-3.5.1.jar</driverJar>
+    </driverJars>
+    <driverClass>org.mariadb.jdbc.Driver</driverClass>
+    <url>jdbc:mysql://172.26.180.80:3306/wifi_project?characterEncoding=utf8</url>
+    <properties>
+      <password>zerobase</password>
+      <databaseName>wifi_project</databaseName>
+      <port>3306</port>
+      <host>172.26.180.80</host>
+      <characterEncoding>utf8</characterEncoding>
+      <user>mission1</user>
+    </properties>
+    <extendedProperties />
+  </connection>
+</database>
+
